@@ -1,12 +1,15 @@
-# مبدل واحدهای اندازه گیری - APK Ready V5
+# مبدل واحدهای اندازه گیری - APK Ready V6
 
-این نسخه شامل index تاییدشده و آیکون آماده برای ساخت APK با GitHub Actions است.
+این نسخه شامل index نهایی است:
+- بدون اسکرول افقی در تبدیلات سریع
+- حذف kgf
+- موبایل‌پسند
+- آیکون آماده
 
-## روش ساخت APK
-1. این ZIP را Extract کن.
-2. فایل‌ها و پوشه‌های داخل آن را در Repository قبلی GitHub جایگزین کن.
+## ساخت APK با GitHub
+1. ZIP را Extract کن.
+2. همه فایل‌ها و پوشه‌های داخل آن را در Repository قبلی GitHub جایگزین کن.
 3. Commit changes بزن.
-4. به تب Actions برو.
-5. Build APK را اجرا کن.
-6. بعد از سبز شدن Build، از بخش Artifacts فایل measurement-converter-debug-apk را دانلود کن.
-7. داخل فایل دانلودی، app-debug.apk قرار دارد.
+4. برو Actions > Build APK > Run workflow.
+5. بعد از سبز شدن build، از Artifacts فایل almas-measurement-converter-v6-apk را دانلود کن.
+6. داخل فایل دانلودی، app-debug.apk قرار دارد.

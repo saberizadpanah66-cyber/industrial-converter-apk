@@ -185,33 +185,27 @@
 
     .chips{
       display:grid;
-      grid-auto-flow:column;
-      grid-template-rows:repeat(2, auto);
-      grid-auto-columns:minmax(118px, 1fr);
+      grid-template-columns:repeat(4, 1fr);
       gap:8px;
-      overflow-x:auto;
-      padding:2px 2px 8px;
-      scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch;
+      margin-top:12px;
+      overflow:visible;
+      padding:0;
     }
-
-    .chips::-webkit-scrollbar{height:6px}
-    .chips::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
 
     .chip{
       border:1px solid #d9e4ef;
       background:linear-gradient(135deg,#ffffff,#f8fbff);
-      border-radius:14px;
-      padding:9px 10px;
+      border-radius:12px;
+      padding:9px 6px;
       color:#1e3a5f;
-      font-size:12.5px;
+      font-size:11.5px;
       cursor:pointer;
       user-select:none;
       transition:.15s ease;
       text-align:center;
       white-space:nowrap;
-      scroll-snap-align:start;
       box-shadow:0 4px 12px rgba(15,23,42,.04);
+      min-width:0;
     }
 
     .chip:hover{
@@ -219,6 +213,8 @@
       color:var(--purple);
       transform:translateY(-1px);
     }
+
+
 
     h3{
       margin:0;
@@ -228,6 +224,7 @@
 
     table{
       width:100%;
+      table-layout:fixed;
       border-collapse:separate;
       border-spacing:0;
       font-size:14px;
@@ -259,6 +256,48 @@
       margin:22px 0 8px;
     }
 
+
+    .ltr{
+      direction:ltr;
+      unicode-bidi:isolate;
+      display:inline-block;
+      text-align:left;
+    }
+
+    .chip{
+      direction:ltr;
+      unicode-bidi:isolate;
+    }
+
+    table td{
+      direction:ltr;
+      unicode-bidi:isolate;
+      text-align:left;
+    }
+
+    table th{
+      text-align:right;
+    }
+
+
+    table th,
+    table td{
+      width:50%;
+      vertical-align:middle;
+    }
+
+    table td{
+      text-align:center;
+      direction:ltr;
+      unicode-bidi:isolate;
+      font-size:14px;
+    }
+
+    table th{
+      text-align:center;
+      font-size:14px;
+    }
+
     @media(max-width:620px){
       body{padding:12px}
       .row3{grid-template-columns:1fr}
@@ -266,9 +305,14 @@
       .topbar{gap:10px}
       .header h1{font-size:20px}
       .brand-logo{width:150px;min-width:150px}
-      .chips{grid-auto-columns:minmax(130px, 1fr)}
-      .chip{font-size:12px;padding:9px 8px}
+      .chips{grid-template-columns:repeat(4, 1fr);gap:6px}.chip{font-size:10.5px;padding:8px 4px}
     }
+  
+    @media(max-width:380px){
+      .chip{font-size:10px;padding:8px 3px}
+      .chips{gap:5px}
+    }
+
   </style>
 </head>
 <body>
@@ -305,13 +349,12 @@
     </div>
     <table>
       <tr><th>تبدیل</th><th>معادل</th></tr>
-      <tr><td>1 inch</td><td>25.4 mm</td></tr>
-      <tr><td>1 MPa</td><td>10 bar = 145.038 PSI</td></tr>
-      <tr><td>1 bar</td><td>14.5038 PSI</td></tr>
-      <tr><td>1 HP</td><td>0.746 kW</td></tr>
-      <tr><td>1 kg</td><td>2.2046 lb</td></tr>
-      <tr><td>1 N·m</td><td>0.7376 lb·ft</td></tr>
-      <tr><td>1 m³</td><td>1000 L</td></tr>
+      <tr><td><span class="ltr">1 inch</span></td><td><span class="ltr">25.4 mm</span></td></tr>
+      <tr><td><span class="ltr">1 MPa</span></td><td><span class="ltr">10 bar = 145.038 PSI</span></td></tr>
+      <tr><td><span class="ltr">1 bar</span></td><td><span class="ltr">14.5038 PSI</span></td></tr>
+      <tr><td><span class="ltr">1 HP</span></td><td><span class="ltr">0.746 kW</span></td></tr>
+      <tr><td><span class="ltr">1 kg</span></td><td><span class="ltr">2.2046 lb</span></td></tr>
+      <tr><td><span class="ltr">1 m³</span></td><td><span class="ltr">1000 L</span></td></tr>
     </table>
   </div>
 
@@ -323,7 +366,7 @@ const data = {
   'طول': {base:'m', units:{'mm':0.001,'cm':0.01,'m':1,'inch':0.0254,'ft':0.3048}},
   'فشار': {base:'Pa', units:{'Pa':1,'kPa':1000,'bar':100000,'MPa':1000000,'PSI':6894.757293}},
   'گشتاور': {base:'N·m', units:{'N·m':1,'kgf·m':9.80665,'lb·ft':1.355817948,'lb·in':0.112984829}},
-  'نیرو': {base:'N', units:{'N':1,'kN':1000,'kgf':9.80665,'ton-force':9806.65,'lbf':4.448221615}},
+  'نیرو': {base:'N', units:{'N':1,'kN':1000,'ton-force':9806.65,'lbf':4.448221615}},
   'جرم / وزن': {base:'kg', units:{'g':0.001,'kg':1,'ton':1000,'lb':0.45359237,'oz':0.028349523}},
   'توان': {base:'W', units:{'W':1,'kW':1000,'HP':745.699872,'BTU/h':0.29307107}},
   'حجم': {base:'L', units:{'mL':0.001,'cm³':0.001,'L':1,'m³':1000,'US gallon':3.785411784}},
@@ -334,19 +377,11 @@ const quick = [
   ['1','inch','mm','طول'],
   ['3/4','inch','mm','طول'],
   ['1/2','inch','mm','طول'],
-  ['1','ft','cm','طول'],
   ['25','MPa','bar','فشار'],
   ['25','MPa','PSI','فشار'],
-  ['100','bar','MPa','فشار'],
-  ['2.2','bar','PSI','فشار'],
   ['10','HP','kW','توان'],
-  ['5','kW','HP','توان'],
-  ['100','N·m','lb·ft','گشتاور'],
-  ['50','kgf·m','N·m','گشتاور'],
-  ['1000','kgf','kN','نیرو'],
   ['1000','L','m³','حجم'],
-  ['90','km/h','m/s','سرعت'],
-  ['25','°C','°F','دما']
+  ['90','km/h','m/s','سرعت']
 ];
 
 const cat = document.getElementById('category');
@@ -419,6 +454,7 @@ function makeChips(){
   quick.forEach(q => {
     let b = document.createElement('span');
     b.className='chip';
+    b.dir='ltr';
     b.textContent=`${q[0]} ${q[1]} → ${q[2]}`;
     b.onclick = () => {
       cat.value=q[3];
