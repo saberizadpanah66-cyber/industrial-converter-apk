@@ -1,15 +1,17 @@
-# Industrial Converter APK - Cloud Build
+نسخه V2 پروژه ساخت APK
 
-این پروژه برای ساخت APK بدون نصب Android SDK روی کامپیوتر کارخانه آماده شده است.
+تغییرات:
+- لوگوی شرکت در بالای سمت راست
+- حذف نام شرکت از صفحه
+- عنوان جدید: مبدل سریع واحدهای صنعتی
+- نوشته پایین صفحه: تهیه شده در واحد فنی
+- آیکون برنامه زیباتر و مبتنی بر لوگو
 
-## روش استفاده با GitHub
+روش استفاده:
+1) اگر Repository قبلی را ساخته‌ای، فقط فایل‌های جدید را جایگزین کن.
+2) Commit changes بزن.
+3) در تب Actions روی Build APK بزن.
+4) Run workflow را اجرا کن.
+5) از بخش Artifacts فایل app-debug.apk را دانلود کن.
 
-1. یک repository جدید در GitHub بساز.
-2. همه فایل‌های داخل این پوشه را داخل repository آپلود کن.
-3. وارد تب Actions شو.
-4. Workflow به نام Build APK را باز کن.
-5. Run workflow را بزن.
-6. بعد از تمام شدن build، پایین صفحه artifact با نام industrial-converter-debug-apk را دانلود کن.
-7. داخل artifact فایل app-debug.apk قرار دارد.
-
-این روش Android SDK را روی سرور GitHub نصب می‌کند و لازم نیست روی کامپیوتر کارخانه SDK نصب شود.
+از این به بعد لازم نیست Repository یا Workflow جدید بسازی؛ فقط تغییرات را Commit و سپس Run workflow می‌کنی.

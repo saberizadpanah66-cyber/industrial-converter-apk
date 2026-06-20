@@ -3,11 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تبدیل واحد صنعتی</title>
+  <title>مبدل سریع واحدهای صنعتی</title>
   <style>
     :root{--bg:#0f172a;--card:#111827;--muted:#94a3b8;--text:#f8fafc;--accent:#38bdf8;--line:#263244;--input:#020617}
     *{box-sizing:border-box} body{margin:0;font-family:tahoma,arial,sans-serif;background:linear-gradient(135deg,#0f172a,#020617);color:var(--text);min-height:100vh;padding:18px}
-    .app{max-width:780px;margin:0 auto}.header{text-align:center;margin:12px 0 22px}.header h1{margin:0 0 8px;font-size:28px}.header p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .app{max-width:780px;margin:0 auto}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand-logo{width:96px;height:auto;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+    .header{text-align:right;margin:12px 0 22px}
+    .header-copy{flex:1}
+    .header h1{margin:0 0 8px;font-size:28px}
+    .header p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .footer{text-align:center;color:#cbd5e1;font-size:13px;margin:22px 0}
+
     .card{background:rgba(17,24,39,.92);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
     label{display:block;margin:10px 0 7px;color:#dbeafe;font-weight:bold}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
     input,select{width:100%;padding:13px;border-radius:12px;border:1px solid #334155;background:var(--input);color:var(--text);font-size:16px;outline:none} input:focus,select:focus{border-color:var(--accent)}
@@ -20,10 +28,17 @@
 </head>
 <body>
 <div class="app">
+  
   <div class="header">
-    <h1>اپ تبدیل واحد صنعتی</h1>
-    <p>مخصوص کارگاه، تعمیرات، هیدرولیک، پنوماتیک و نقشه‌خوانی — بدون اینترنت کار می‌کند.</p>
+    <div class="topbar">
+      <div class="header-copy">
+        <h1>مبدل سریع واحدهای صنعتی</h1>
+        <p>تبدیل سریع و دقیق واحدها برای کارگاه، تعمیرات، هیدرولیک، پنوماتیک و نقشه‌خوانی — بدون نیاز به اینترنت.</p>
+      </div>
+      <img class="brand-logo" src="logo.png" alt="لوگوی شرکت" />
+    </div>
   </div>
+
 
   <div class="card">
     <div class="row3">
@@ -51,7 +66,7 @@
     </table>
     <p class="small">نکته: برای کار سریع، 1 bar را حدود 15 PSI و 1 inch را حدود 25 mm در نظر بگیر.</p>
   </div>
-  <div class="footer">ساخته‌شده برای استفاده سریع صنعتی</div>
+  <div class="footer">تهیه شده در واحد فنی</div>
 </div>
 <script>
 const data = {
