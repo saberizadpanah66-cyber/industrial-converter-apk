@@ -1,8 +1,8 @@
 {
-  "name": "industrial-converter-apk",
-  "version": "2.0.0",
+  "name": "measurement-converter-apk",
+  "version": "5.0.0",
   "private": true,
-  "description": "Offline industrial unit converter APK build project",
+  "description": "Offline measurement unit converter APK",
   "scripts": {
     "cap:add:android": "npx cap add android",
     "cap:sync": "npx cap sync android",
