@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تبدیل واحد صنعتی</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--muted:#94a3b8;--text:#f8fafc;--accent:#38bdf8;--line:#263244;--input:#020617}
+    *{box-sizing:border-box} body{margin:0;font-family:tahoma,arial,sans-serif;background:linear-gradient(135deg,#0f172a,#020617);color:var(--text);min-height:100vh;padding:18px}
+    .app{max-width:780px;margin:0 auto}.header{text-align:center;margin:12px 0 22px}.header h1{margin:0 0 8px;font-size:28px}.header p{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+    .card{background:rgba(17,24,39,.92);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+    label{display:block;margin:10px 0 7px;color:#dbeafe;font-weight:bold}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    input,select{width:100%;padding:13px;border-radius:12px;border:1px solid #334155;background:var(--input);color:var(--text);font-size:16px;outline:none} input:focus,select:focus{border-color:var(--accent)}
+    button{width:100%;padding:13px;border:0;border-radius:12px;background:var(--accent);color:#00111f;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px} button:active{transform:scale(.99)}
+    .result{margin-top:14px;padding:14px;border-radius:14px;background:#020617;border:1px dashed #334155;line-height:2;font-size:17px;direction:ltr;text-align:left;white-space:pre-wrap}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.chip{border:1px solid #334155;background:#020617;border-radius:999px;padding:8px 11px;color:#dbeafe;font-size:13px;cursor:pointer}.chip:hover{border-color:var(--accent)}
+    table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}td,th{border-bottom:1px solid #263244;padding:9px;text-align:right}th{color:#bae6fd}.small{color:var(--muted);font-size:13px;line-height:1.8}.footer{text-align:center;color:var(--muted);font-size:12px;margin:22px 0}
+    @media(max-width:620px){.row,.row3{grid-template-columns:1fr}.header h1{font-size:22px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>اپ تبدیل واحد صنعتی</h1>
+    <p>مخصوص کارگاه، تعمیرات، هیدرولیک، پنوماتیک و نقشه‌خوانی — بدون اینترنت کار می‌کند.</p>
+  </div>
+
+  <div class="card">
+    <div class="row3">
+      <div><label>دسته</label><select id="category"></select></div>
+      <div><label>از واحد</label><select id="fromUnit"></select></div>
+      <div><label>به واحد</label><select id="toUnit"></select></div>
+    </div>
+    <label>مقدار</label><input id="value" type="number" step="any" inputmode="decimal" placeholder="مثلاً 25" />
+    <button onclick="convert()">تبدیل کن</button>
+    <div id="result" class="result">نتیجه اینجا نمایش داده می‌شود.</div>
+    <div class="chips" id="quickChips"></div>
+  </div>
+
+  <div class="card">
+    <h3>جدول‌های خیلی پرکاربرد</h3>
+    <table>
+      <tr><th>تبدیل</th><th>معادل</th></tr>
+      <tr><td>1 inch</td><td>25.4 mm</td></tr>
+      <tr><td>1 MPa</td><td>10 bar = 145.038 PSI</td></tr>
+      <tr><td>1 bar</td><td>14.5038 PSI</td></tr>
+      <tr><td>1 HP</td><td>0.746 kW</td></tr>
+      <tr><td>1 kg</td><td>2.2046 lb</td></tr>
+      <tr><td>1 N·m</td><td>0.7376 lb·ft</td></tr>
+      <tr><td>1 m³</td><td>1000 L</td></tr>
+    </table>
+    <p class="small">نکته: برای کار سریع، 1 bar را حدود 15 PSI و 1 inch را حدود 25 mm در نظر بگیر.</p>
+  </div>
+  <div class="footer">ساخته‌شده برای استفاده سریع صنعتی</div>
+</div>
+<script>
+const data = {
+  'طول': {base:'m', units:{'mm':0.001,'cm':0.01,'m':1,'inch':0.0254,'ft':0.3048}},
+  'فشار': {base:'Pa', units:{'Pa':1,'kPa':1000,'bar':100000,'MPa':1000000,'PSI':6894.757293}},
+  'گشتاور': {base:'N·m', units:{'N·m':1,'kgf·m':9.80665,'lb·ft':1.355817948,'lb·in':0.112984829}},
+  'نیرو': {base:'N', units:{'N':1,'kN':1000,'kgf':9.80665,'ton-force':9806.65,'lbf':4.448221615}},
+  'جرم / وزن': {base:'kg', units:{'g':0.001,'kg':1,'ton':1000,'lb':0.45359237,'oz':0.028349523}},
+  'توان': {base:'W', units:{'W':1,'kW':1000,'HP':745.699872,'BTU/h':0.29307107}},
+  'حجم': {base:'L', units:{'mL':0.001,'cm³':0.001,'L':1,'m³':1000,'US gallon':3.785411784}},
+  'سرعت': {base:'m/s', units:{'m/s':1,'km/h':0.277777778,'mph':0.44704,'ft/min':0.00508}}
+};
+const tempUnits = ['°C','°F','K'];
+const quick = [
+  ['25','MPa','bar','فشار'], ['25','MPa','PSI','فشار'], ['1','inch','mm','طول'], ['3/4','inch','mm','طول'],
+  ['100','bar','MPa','فشار'], ['10','HP','kW','توان'], ['100','N·m','lb·ft','گشتاور'], ['2.2','bar','PSI','فشار']
+];
+const cat = document.getElementById('category'), from = document.getElementById('fromUnit'), to = document.getElementById('toUnit');
+Object.keys(data).concat(['دما']).forEach(c=>cat.add(new Option(c,c)));
+cat.onchange = fillUnits; from.onchange = convert; to.onchange = convert; document.getElementById('value').oninput = convert;
+function fillUnits(){
+  from.innerHTML=''; to.innerHTML='';
+  const units = cat.value === 'دما' ? tempUnits : Object.keys(data[cat.value].units);
+  units.forEach(u=>{from.add(new Option(u,u)); to.add(new Option(u,u));});
+  if(units.includes('mm')){from.value='inch';to.value='mm'}
+  if(cat.value==='فشار'){from.value='bar';to.value='PSI'}
+  if(cat.value==='دما'){from.value='°C';to.value='°F'}
+  convert();
+}
+function parseVal(v){ if(String(v).includes('/')){let [a,b]=String(v).split('/').map(Number); return a/b;} return Number(v); }
+function fmt(n){ if(!isFinite(n)) return '-'; return Number(n.toFixed(6)).toLocaleString('en-US'); }
+function tempConvert(v,f,t){
+  let c = f==='°C'?v:f==='°F'?(v-32)*5/9:v-273.15;
+  return t==='°C'?c:t==='°F'?c*9/5+32:c+273.15;
+}
+function convert(){
+  const raw = document.getElementById('value').value;
+  if(raw === ''){document.getElementById('result').textContent='نتیجه اینجا نمایش داده می‌شود.'; return;}
+  const v = parseVal(raw); if(!isFinite(v)){document.getElementById('result').textContent='عدد معتبر وارد کن.'; return;}
+  let res;
+  if(cat.value==='دما') res=tempConvert(v,from.value,to.value);
+  else res = v * data[cat.value].units[from.value] / data[cat.value].units[to.value];
+  document.getElementById('result').textContent = `${v} ${from.value} = ${fmt(res)} ${to.value}`;
+}
+function makeChips(){
+  const box=document.getElementById('quickChips');
+  quick.forEach(q=>{let b=document.createElement('span');b.className='chip';b.textContent=`${q[0]} ${q[1]} → ${q[2]}`;b.onclick=()=>{cat.value=q[3];fillUnits();document.getElementById('value').value=q[0];from.value=q[1];to.value=q[2];convert();};box.appendChild(b)});
+}
+fillUnits(); makeChips();
+</script>
+</body>
+</html>
